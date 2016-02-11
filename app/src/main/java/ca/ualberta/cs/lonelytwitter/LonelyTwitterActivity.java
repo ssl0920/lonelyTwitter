@@ -67,9 +67,12 @@ public class LonelyTwitterActivity extends Activity {
 				//saveInFile(text, new Date(System.currentTimeMillis()));
 				//finish();
 
+				// TESTING INTENTS
 				//
-				//
-
+				Intent intent = new Intent(LonelyTwitterActivity.this, IntentReaderActivity.class);
+				intent.putExtra(IntentReaderActivity.TEXT_TO_TRANSFORM_KEY, text);
+				intent.putExtra(IntentReaderActivity.MODE_OF_TRANSFORM_KEY, IntentReaderActivity.NORMAL);
+				startActivity(intent); // start a new screen with the above messages.
 				//
 				//
 			}

@@ -37,7 +37,26 @@ public class LonelyTwitterActivityUITest extends ActivityInstrumentationTestCase
 
     //
     //
+    @UiThreadTest
+    public void testMakeTweet(){
+        // this returns the activity on the test
+        LonelyTwitterActivity lonelyTwitterActivity = (LonelyTwitterActivity) getActivity();
+        // check length of tweet before and after sending the message
+        int oldLength = lonelyTwitterActivity.getAdapter().getCount();
+        makeTweet("test message1");
+        ArrayAdapter<Tweet> aa = lonelyTwitterActivity.getAdapter();
+        // we'll assert the count of this new array adapter aa as old one + 1
+        // Assert that the ListView adapter gets a new element.
+        assertEquals("The new tweet hasn't received!", oldLength + 1, aa.getCount());
 
+        // check if last item in aa adapter is an instance of tweet.
+        // Assert that the new thing in the adapter is a Tweet
+        assertTrue("The object is not a Tweet!", aa.getItem(aa.getCount()-1) instanceof Tweet);
+
+        Tweet tweet = aa.getItem(aa.getCount()-1);
+        // Assert that the text of the Tweet instance is correct
+        assertEquals("This is not the text we expected!", tweet.getMessage(), "test message1");
+    }
     //
     //
 }
