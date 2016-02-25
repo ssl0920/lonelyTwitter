@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class LonelyTwitterActivity extends Activity {
 
@@ -51,13 +52,16 @@ public class LonelyTwitterActivity extends Activity {
 
             public void onClick(View v) {
                 String text = bodyText.getText().toString();
-                Tweet latestTweet = new NormalTweet(text);
+                NormalTweet latestTweet = new NormalTweet(text);
 
                 tweets.add(latestTweet);
                 adapter.notifyDataSetChanged();
 
                 // TODO: Replace with Elasticsearch
-                saveInFile();
+                //ElasticsearchTweetController.addTweet(latestTweet);       below 2 lines do the same shit as this
+                ElasticsearchTweetController.AddTweetTask addTweetTask = new ElasticsearchTweetController.AddTweetTask();
+                addTweetTask.execute(latestTweet);
+                //saveInFile();         don't need anymore
 
                 setResult(RESULT_OK);
             }
@@ -70,7 +74,23 @@ public class LonelyTwitterActivity extends Activity {
 
         // Get latest tweets
         // TODO: Replace with Elasticsearch
-        loadFromFile();
+        ElasticsearchTweetController.GetTweetsTask getTweetsTask = new ElasticsearchTweetController.GetTweetsTask();
+        getTweetsTask.execute("test"); // nothing in JEST means it will get exactly the same stuff you'll get looking at the web
+        // so bascially this: http://cmput301.softwareprocess.es:8080/testing/tweet/_search?pretty
+
+        // LAB ASSIGNMENT: putting a word in the getTweetTask.execute("ReturnStringWrittenHere") returns the tweets containing that string.
+
+
+        try {
+            tweets = new ArrayList<Tweet>();
+            tweets.addAll(getTweetsTask.get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();;
+        }
+
+        //loadFromFile();
 
         // Binds tweet list with view, so when our array updates, the view updates with it
         adapter = new ArrayAdapter<Tweet>(this, R.layout.list_item, tweets);
