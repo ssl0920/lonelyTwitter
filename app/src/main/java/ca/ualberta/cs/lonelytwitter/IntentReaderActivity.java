@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class IntentReaderActivity extends Activity {
@@ -36,7 +37,13 @@ public class IntentReaderActivity extends Activity {
         else
             text = "default value";
 
-        ((TextView)findViewById(R.id.intentText)).setText(text);
+        ((TextView) findViewById(R.id.intentText)).setText(text);
+        findViewById(R.id.intentText).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(IntentReaderActivity.this, LonelyTwitterActivity.class));
+            }
+        });
         //
         //
     }

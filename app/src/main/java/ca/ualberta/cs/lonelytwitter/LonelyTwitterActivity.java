@@ -42,8 +42,10 @@ public class LonelyTwitterActivity extends Activity {
 	}
 
 	private ArrayAdapter<Tweet> adapter;
-	
-	/** Called when the activity is first created. */
+
+	/**
+	 * Called when the activity is first created.
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,6 +77,24 @@ public class LonelyTwitterActivity extends Activity {
 				startActivity(intent); // start a new screen with the above messages.
 				//
 				//
+			}
+		});
+		findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(LonelyTwitterActivity.this, IntentReaderActivity.class));
+			}
+		});
+		findViewById(R.id.clear).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(LonelyTwitterActivity.this, IntentReaderActivity.class));
+			}
+		});
+		findViewById(R.id.oldTweetsList).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(LonelyTwitterActivity.this, IntentReaderActivity.class));
 			}
 		});
 	}
