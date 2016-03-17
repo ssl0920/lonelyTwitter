@@ -26,10 +26,32 @@ public abstract class Tweet {
     protected Date date;
     protected String message;
 
+    protected Bitmap thumbnail;
+    protected String thumbnailBase64;
+
 
     public Tweet(Date date, String message) {
         this.date = date;
         this.message = message;
+    }
+
+    public void addThumbnail (Bitmap newThumbnail){
+        if (newThumbnail != null) {
+            thumbnail = newThumbnail;
+            ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
+            newThumbnail.compress(Bitmap.CompressFormat.PNG, 100, byteArrayBitmapStream);
+
+            byte[] b = byteArrayBitmapStream.toByteArray();
+            thumbnailBase64 = Base64.encodeToString(b, Base64.DEFAULT);
+        }
+    }
+
+    public Bitmap getThumbnail(){
+        if (thumbnail == null && thumbnailBase64 != null) {
+            byte[] decodeString = Base64.decode(thumbnailBase64, Base64.DEFAULT);
+            thumbnail = BitmapFactory.decodeByteArray(decodeString, 0, decodeString.length);
+        }
+        return thumbnail;
     }
 
     public Tweet(String message) {
@@ -69,5 +91,11 @@ public abstract class Tweet {
             }
         }
         return date.toString() + " | " + message;
+    }
+
+    public int compareTo(Object tweet) { //needs to remain as object then casted
+        if (getDate() == null || ((Tweet)tweet).getDate() == null)
+            return 0;
+        return getDate().compareTo(((Tweet)tweet).getDate());
     }
 }
