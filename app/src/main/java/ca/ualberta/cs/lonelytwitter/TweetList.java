@@ -20,7 +20,7 @@ public class TweetList {
         return tweets;
     }
 
-    public void add(Tweet tweet){
+    public void addNewTweet(Tweet tweet){
         tweets.add(tweet);
     }
 
@@ -36,4 +36,15 @@ public class TweetList {
         tweets.remove(tweet);
     }
 
+    // since it is using from codes from TweetList, we did: refactor -> move
+    public int countImportant() {
+        //Count important tweets
+        int numImportant = 0;
+        for ( Tweet aTweet: getTweets() ){
+            if (aTweet.isImportant() == Boolean.TRUE){
+                numImportant++;
+            }
+        }
+        return numImportant;
+    }
 }

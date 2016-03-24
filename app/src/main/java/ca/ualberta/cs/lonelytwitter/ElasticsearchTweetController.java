@@ -21,6 +21,7 @@ import io.searchbox.core.SearchResult;
  */
 public class ElasticsearchTweetController {
     private static JestDroidClient client;
+    private static String test;
 
     public static class GetTweetsTask extends AsyncTask<String,Void,ArrayList<NormalTweet>> {
 
@@ -52,7 +53,10 @@ public class ElasticsearchTweetController {
                 search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"message\":\"" + params[0] + "\"}}, \"sort\": {\"date\": {\"order\": \"desc\"}}}";
             }
 
-            Search search = new Search.Builder(search_string).addIndex("testing").addType("tweet").build();
+            // Extract variable or field to create a variable for a field for the class from just a string, etc...
+            test = "testing";
+
+            Search search = new Search.Builder(search_string).addIndex(test).addType("tweet").build();
             try {
                 SearchResult execute = client.execute(search);
                 if(execute.isSucceeded()) {

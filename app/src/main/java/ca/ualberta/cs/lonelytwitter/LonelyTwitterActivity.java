@@ -66,7 +66,7 @@ public class LonelyTwitterActivity extends Activity {
                 String text = bodyText.getText().toString();
                 NormalTweet latestTweet = new NormalTweet(text);
 
-                myTweets.add(latestTweet);
+                myTweets.addNewTweet(latestTweet);
 
                 latestTweet.addThumbnail(thumbnail);
                 adapter.insert(latestTweet, 0);
@@ -105,14 +105,10 @@ public class LonelyTwitterActivity extends Activity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+        // refactor -> extract -> method
+        // refactor -> inline -> so you can keep the new method and get the method back here or replace, etc...
+        numImportant = myTweets.countImportant();
 
-        //Count important tweets
-        numImportant = 0;
-        for ( Tweet aTweet: myTweets.getTweets() ){
-            if (aTweet.isImportant() == Boolean.TRUE){
-                numImportant++;
-            }
-        }
 
 //        adapter = new ArrayAdapter<Tweet>(this, R.layout.list_item, tweets);
         // Binds tweet list with view, so when our array updates, the view updates with it
@@ -120,6 +116,11 @@ public class LonelyTwitterActivity extends Activity {
         adapter = new TweetAdapter(this, myTweets.getTweets());
         oldTweetsList.setAdapter(adapter);
     }
+
+    // refactor -> extract -> method
+    // the extracted method was here
+    // uses features from another class
+    //countImportant --> myTweets.countImportant(this);
 
     // http://developer.android.com/training/camera/photobasics.html
     @Override

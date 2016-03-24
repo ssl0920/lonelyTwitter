@@ -65,7 +65,7 @@ public abstract class Tweet {
     }
 
     //@Override
-    public abstract Boolean isImportant();
+    //public abstract Boolean isImportant();
 
     @Override
     public String toString() {
@@ -80,6 +80,9 @@ public abstract class Tweet {
         return date.toString() + " | " + message;
     }
 
+
+    //@Override
+    abstract Boolean isImportant();
 
     public Date getDate() {
         return this.date;
